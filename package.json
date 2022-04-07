@@ -10,5 +10,13 @@
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.4.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arifullahkhan1/TODOLIST-G.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Arifullahkhan1/TODOLIST-G/issues"
+  },
+  "homepage": "https://github.com/Arifullahkhan1/TODOLIST-G#readme"
 }

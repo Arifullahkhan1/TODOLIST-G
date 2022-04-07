@@ -1,4 +1,4 @@
-import { Wish,TreeWish} from "./wish";
+import { Wish} from "./wish";
 
 let wish1: Wish = new Wish("I will buy Sports shoes");
 let wish2: Wish = new Wish("I will start Gym");
@@ -28,8 +28,8 @@ function clearList() {
 
   clickCount++;
 }
-let toDos:TreeWish[]= [];
-function doSort(toDos:TreeWish) {
+let toDos:Wish[]= [];
+function doSort(toDos:Wish[]) {
   return toDos.sort((a,b) => {
     if (a.value > b.value) {
       return 1;
@@ -40,18 +40,19 @@ function doSort(toDos:TreeWish) {
     return 0;
   });
   return toDos;
+  
 }
 let addbtn = document.getElementById("add");
   addbtn.addEventListener("click", () => {
-  let data =document.getElementById("myInput") as HTMLInputElement;
-  toDos.push(new Wish(data.value));
-  var mapped = toDos.map((el, i) => ({ index: i, value: el }));
-  var sortedTodos = doSort(mapped).map((el:Wish) => toDos[el.index]);
-  let todoList = document.getElementById("todoList");
-  todoList.innerHTML = sortedTodos.map((todo:Wish) => "<li>" + todo).join("");
-  //todoList.addEventListener("click", clearList);
-  data.value = "";
-});
+  let data =(document.getElementById("myInput") as HTMLInputElement);
+  //let rdata=data.innerText;
+toDos.push(new Wish(data.value));
+doSort(toDos);
+let todoList = document.getElementById("todoList");
+todoList.innerHTML = toDos.map((todo:Wish) => "<li>" + todo.value).join("");
+todoList.addEventListener("click", clearList);
+data.value = "";
+}); 
 /* function add(x:string) {
 
    let a= new Wish(x);
