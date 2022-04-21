@@ -1,4 +1,4 @@
-import { Wish,TreeWish} from "./wish";
+import {Wish} from "./wish";
 
 let wish1: Wish = new Wish("I will buy Sports shoes");
 let wish2: Wish = new Wish("I will start Gym");
@@ -10,27 +10,48 @@ let wish5: Wish = new Wish("I will work in my CV");
 let mywishTree:Wish[]= [wish1, wish2, wish3, wish4, wish5];
 
 let wishlista = document.getElementById("mylista");
-for (let i = 0; i < mywishTree.length; i++) {
-  let wishElement = mywishTree[i];
-  let wish = document.createElement("li");
-  wish.innerHTML = wishElement.wish;
-  wish.addEventListener("click", clearList);
-  wishlista.appendChild(wish);
-}
+renderList(wishlista, mywishTree);
 
-var clickCount = 0;
-function clearList() {
-  if (clickCount % 2 == 0) {
-    (event.srcElement as Element).id = "cc";
-  } else {
-    (event.srcElement as Element).id = "ccc";
+function renderList(div:HTMLElement, list:Wish[]){
+  div.innerHTML = list.map((todo:Wish) => {
+    if (todo.done === true)
+      return "<li><span class='cc'>" + todo.value +"</span><button style='float:right;color:red'>&cross;</button></li>";
+    else
+      return "<li><span class='ccc'>" + todo.value +"</span><button style='float:right;color:red'>&cross;</button></li>";
+  })
+    .join("");
+
+  for(let child of div.childNodes){
+    (child.childNodes[0] as HTMLElement).addEventListener("click", (e) => clearList(e, list));
+    (child.childNodes[1] as HTMLButtonElement).addEventListener("click", (e) => deleteItem(e, list));
   }
-
-  clickCount++;
 }
-let toDos:TreeWish[]= [];
-function doSort(toDos:TreeWish) {
-  return toDos.sort((a,b) => {
+
+function clearList(e:MouseEvent, list:Wish[]){
+  let wishText = (e.srcElement as HTMLElement).innerText;
+  for(let i in list){
+    if(list[i].value === wishText){
+      list[i].done = !list[i].done
+      break
+    }
+  }
+  renderList((e.srcElement as HTMLElement).parentNode.parentNode as HTMLElement, list);
+}
+
+function deleteItem(e:MouseEvent, list:Wish[]){
+  let wishText = ((e.srcElement as HTMLElement).parentNode.childNodes[0] as HTMLElement).innerText;  
+  for(let i in list){
+    if(list[i].value === wishText){
+      list.splice( Number(i) , 1)
+      break
+    }
+  }
+  renderList((e.srcElement as HTMLElement).parentNode.parentNode as HTMLElement, list);
+}
+
+let toDos:Wish[]= [];
+function doSort(toDos:Wish[]) {
+  toDos.sort((a,b) => {
     if (a.value > b.value) {
       return 1;
     }
@@ -42,18 +63,24 @@ function doSort(toDos:TreeWish) {
   return toDos;
 }
 let addbtn = document.getElementById("add");
-  addbtn.addEventListener("click", () => {
-  let data =document.getElementById("myInput") as HTMLInputElement;
-  toDos.push(new Wish(data.value));
-  var mapped = toDos.map((el, i) => ({ index: i, value: el }));
-  var sortedTodos = doSort(mapped).map((el:Wish) => toDos[el.index]);
-  let todoList = document.getElementById("todoList");
-  todoList.innerHTML = sortedTodos.map((todo:Wish) => "<li>" + todo).join("");
-  //todoList.addEventListener("click", clearList);
-  data.value = "";
-});
-/* function add(x:string) {
 
-   let a= new Wish(x);
-   
-} */
+addbtn.addEventListener("click", () => {
+    let data =document.getElementById("myInput") as HTMLInputElement;
+    console.log(data.value);
+
+    //not allowing same todo
+    let contain:boolean = false;
+    for(let t of toDos){
+      if(data.value === t.value) contain = true;
+    }
+    if(! contain)
+      toDos.push(new Wish(data.value));
+    else
+      alert("Todo already exist");
+
+    doSort(toDos);
+    let todoList = document.getElementById("todoList");
+    renderList(todoList, toDos);
+    
+    data.value = "";
+});
