@@ -7,6 +7,7 @@
  
 }
 ol{
+<<<<<<< HEAD
  
 width: 10%;
   margin-right: 77rem;
@@ -14,6 +15,22 @@ width: 10%;
   color:royalblue;
   border: darkgoldenrod 2px solid;
 }
+=======
+   
+    width: 10%;
+    margin-right: 120rem; /* 77 */
+    margin-top: -.5rem;
+    color:royalblue;
+    border: darkgoldenrod 2px solid;
+  }
+  
+  ol li{
+  
+    padding:10px;
+    border-right:1px solid rgb(243, 242, 242);
+    border-left:1px solidrgb(243, 242, 242);
+  
+>>>>>>> 12a6e041329856a1bc1a60bee542b62158d90f6c
 
 ol li{
 

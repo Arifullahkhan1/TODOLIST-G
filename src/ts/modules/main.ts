@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import {Wish} from "./wish";
+=======
+import { Wish} from "./wish";
+>>>>>>> 12a6e041329856a1bc1a60bee542b62158d90f6c
 
 let wish1: Wish = new Wish("I will buy Sports shoes");
 let wish2: Wish = new Wish("I will start Gym");
@@ -48,10 +52,16 @@ function deleteItem(e:MouseEvent, list:Wish[]){
   }
   renderList((e.srcElement as HTMLElement).parentNode.parentNode as HTMLElement, list);
 }
+<<<<<<< HEAD
 
 let toDos:Wish[]= [];
 function doSort(toDos:Wish[]) {
   toDos.sort((a,b) => {
+=======
+let toDos:Wish[]= [];
+function doSort(toDos:Wish[]) {
+  return toDos.sort((a,b) => {
+>>>>>>> 12a6e041329856a1bc1a60bee542b62158d90f6c
     if (a.value > b.value) {
       return 1;
     }
@@ -61,8 +71,23 @@ function doSort(toDos:Wish[]) {
     return 0;
   });
   return toDos;
+  
 }
 let addbtn = document.getElementById("add");
+<<<<<<< HEAD
+=======
+  addbtn.addEventListener("click", () => {
+  let data =(document.getElementById("myInput") as HTMLInputElement);
+  //let rdata=data.innerText;
+toDos.push(new Wish(data.value));
+doSort(toDos);
+let todoList = document.getElementById("todoList");
+todoList.innerHTML = toDos.map((todo:Wish) => "<li>" + todo.value).join("");
+todoList.addEventListener("click", clearList);
+data.value = "";
+}); 
+/* function add(x:string) {
+>>>>>>> 12a6e041329856a1bc1a60bee542b62158d90f6c
 
 addbtn.addEventListener("click", () => {
     let data =document.getElementById("myInput") as HTMLInputElement;
